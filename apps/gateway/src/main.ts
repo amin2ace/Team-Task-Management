@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
 import { ConfigService } from '@nestjs/config';
-import { INestApplication, Logger } from '@nestjs/common';
+import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const configService = new ConfigService();
@@ -10,6 +10,11 @@ const logger = new Logger('GateWay Main', { timestamp: true });
 
 async function bootstrap() {
   const app = await NestFactory.create(GatewayModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // Removes any properties from the incoming request that are not defined in DTO.
+    }),
+  );
 
   const port: string = configService.getOrThrow<string>('PORT');
 
