@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CreateTeamRequestDto, CreateTeamResponseDto } from './dto';
 
 @Injectable()
 export class GatewayService {
   constructor(protected readonly configServcie: ConfigService) {}
 
-  async getHello(): Promise<string> {
-    return this.configServcie.get<string>('PORT') as string;
+  async createNewTeam(
+    teamData: CreateTeamRequestDto,
+  ): Promise<CreateTeamResponseDto> {
+    return '';
   }
 }
