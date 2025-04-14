@@ -11,7 +11,12 @@ import { join } from 'path';
       isGlobal: true,
       envFilePath: 'apps/gateway/.env',
       validationSchema: Joi.object({
+        // App Variables
         PORT: Joi.string().required(),
+
+        // Swagger Variables
+        SWAGGER_PATH: Joi.string().required(),
+        SWAGGER_SERVER_URL: Joi.string().required(),
       }),
     }),
   ],
