@@ -21,6 +21,7 @@ async function bootstrap() {
 
   await swaggerApi(app, port);
   app.startAllMicroservices();
+  app.useLogger(new Logger());
 
   await app.listen(port, () => {
     logger.debug(`HTTP Gateway started at port ${port}`);
