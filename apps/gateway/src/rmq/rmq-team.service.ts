@@ -6,6 +6,7 @@ import {
   Transport,
 } from '@nestjs/microservices';
 
+@Injectable()
 export class RmqTeamService implements ClientsModuleOptionsFactory {
   constructor(protected readonly config: ConfigService) {}
 
@@ -16,7 +17,7 @@ export class RmqTeamService implements ClientsModuleOptionsFactory {
         urls: [this.config.getOrThrow<string>('RABBITMQ_URL')],
         queue: this.config.getOrThrow<string>(`RABBITMQ_TEAM_QUEUE`),
         queueOptions: {
-          durable: true,
+          durable: false,
         },
       },
     };
