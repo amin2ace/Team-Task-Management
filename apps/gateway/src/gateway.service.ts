@@ -3,12 +3,11 @@ import { ConfigService } from '@nestjs/config';
 import { CreateTeamRequestDto, CreateTeamResponseDto } from './dto';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class GatewayService {
   constructor(
     protected readonly configServcie: ConfigService,
-    @Inject('GatewayService.name') private readonly client: ClientProxy,
+    @Inject(GatewayService.name) private readonly client: ClientProxy,
   ) {}
 
   protected logger = new Logger(GatewayService.name);
