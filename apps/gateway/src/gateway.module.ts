@@ -4,11 +4,8 @@ import { GatewayService } from './gateway.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule } from '@nestjs/microservices';
-import { RmqService } from './rmq.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmOptions } from './typeorm.options';
+import { RmqTeamService } from './rmq/rmq-team.service';
 import path from 'path';
-// import { RmqModule } from '@app/common';
 
 @Module({
   imports: [
@@ -17,8 +14,8 @@ import path from 'path';
       clients: [
         {
           inject: [ConfigService],
-          name: 'GatewayService.name',
-          useClass: RmqService,
+          name: GatewayService.name,
+          useClass: RmqTeamService,
         },
       ],
     }),
@@ -36,7 +33,12 @@ import path from 'path';
 
         // RabbitMq Variables
         RABBITMQ_URL: Joi.string().required(),
-        RABBITMQ_SERVICE_QUEUE: Joi.string().required(),
+        RABBITMQ_TEAM_QUEUE: Joi.string().required(),
+        RABBITMQ_TASK_QUEUE: Joi.string().required(),
+
+        // DataBase
+        GATEWAY_DB_NAME: Joi.string().required(),
+        GATEWAY_DB_URI: Joi.string().required(),
       }),
     }),
   ],
