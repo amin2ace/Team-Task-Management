@@ -5,7 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule } from '@nestjs/microservices';
 import { RmqTeamService } from './rmq/rmq-team.service';
-import path from 'path';
+import path, { join } from 'path';
+import { RmqTaskService } from './rmq/rmq-task.service';
 
 @Module({
   imports: [
@@ -14,15 +15,20 @@ import path from 'path';
       clients: [
         {
           inject: [ConfigService],
-          name: GatewayService.name,
+          name: RmqTeamService.name,
           useClass: RmqTeamService,
+        },
+        {
+          inject: [ConfigService],
+          name: RmqTaskService.name,
+          useClass: RmqTaskService,
         },
       ],
     }),
 
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: path.join(__dirname, '..', `.env.${process.env.NODE_ENV}`),
+      envFilePath: join(process.cwd(), 'apps', 'gateway', '.env.development'),
       validationSchema: Joi.object({
         // App Variables
         PORT: Joi.string().required(),
