@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateTeamRequestDto } from './create-team-request.dto';
+import { Expose } from 'class-transformer';
 
-export class CreateTeamResponseDto implements Partial<CreateTeamRequestDto> {}
+export class CreateTeamResponseDto {
+  @Expose()
+  name: string;
+
+  @Expose()
+  description: string;
+
+  @Expose()
+  members?: string[];
+
+  @Expose()
+  avatarUrl?: string;
+}

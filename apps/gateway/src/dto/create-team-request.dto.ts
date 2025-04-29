@@ -25,7 +25,7 @@ export class CreateTeamRequestDto {
     example: ['John Wick', 'Rick Grimes'],
     description: 'Array of team members',
   })
-  @IsArray({ each: true })
+  @IsArray()
   @IsOptional()
   members?: string[];
 
