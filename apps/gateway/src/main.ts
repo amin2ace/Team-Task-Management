@@ -3,6 +3,7 @@ import { GatewayModule } from './gateway.module';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+// import { RmqService } from '@app/common';
 
 const configService = new ConfigService();
 
@@ -19,6 +20,8 @@ async function bootstrap() {
   const port: string = configService.getOrThrow<string>('PORT');
 
   await swaggerApi(app, port);
+  app.startAllMicroservices();
+
   await app.listen(port, () => {
     logger.debug(`HTTP Gateway started at port ${port}`);
   });
@@ -31,7 +34,7 @@ async function swaggerApi(app: INestApplication, port: string) {
   const document = new DocumentBuilder()
     .setTitle('HTTP Gateway')
     .setVersion('0.1')
-    .addServer(`${swaggerUrl}:${port}/${swaggerPath}`)
+    // .addServer(`${swaggerUrl}:${port}/${swaggerPath}`)
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, document);
