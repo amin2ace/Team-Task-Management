@@ -10,3 +10,13 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: rootUser
       MONGO_INITDB_ROOT_PASSWORD: rootPass
+
+  rabbitMq:
+    image: rabbitmq:management-alpine
+    container_name: Team_Task_RabbitMq
+    ports:
+      - '5672:5672' # RabbitMQ broker port
+      - '15672:15672' # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: rmqUser
+      RABBITMQ_DEFAULT_PASS: rmqPass
